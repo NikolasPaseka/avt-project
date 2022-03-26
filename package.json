@@ -19,6 +19,8 @@
   "homepage": "https://github.com/NikolasPaseka/avt-project#readme",
   "dependencies": {
     "ejs": "^3.1.6",
-    "express": "^4.17.3"
+    "ejs-mate": "^3.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8"
   }
 }
