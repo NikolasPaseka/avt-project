@@ -6,8 +6,10 @@ const ejsMate = require('ejs-mate')
 const methodOverride = require('method-override')
 const mongoose = require('mongoose')
 
-const { Event, eventCategories } = require('./models/event')
-const Address = require('./models/address')
+const catchAsync = require('./utils/catchAsync')
+const ExpressError = require('./utils/ExpressError')
+
+const events = require('./routes/events')
 
 mongoose.connect('mongodb://localhost:27017/joinMe')
     .then(() => {
@@ -32,60 +34,18 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
-app.get('/events', async (req, res) => {
-    const events = await Event.find({})
-    res.render('events/index', { events })
+// routes
+app.use('/events', events)
+
+app.all('*', (req, res, next) => {
+   next(new ExpressError(404, 'Page Not Found!'))
 })
 
-app.get('/events/new', (req, res) => {
-    res.render('events/new', { eventCategories })
-})
-
-app.post('/events', async (req, res) => {
-    try {
-        const address = new Address( req.body.address)
-        const event = new Event( req.body.event)
-        event.creationDate = Date.now()
-        event.address = address
-        await address.save()
-        await event.save()
-        res.redirect(`/events/${event._id}`)
-    } catch (err) {
-        console.log(err)
-    }
-})
-
-app.get('/events/:id', async (req, res) => {
-    const event = await Event.findById(req.params.id).populate('address')
-    res.render('events/show', { event })
-})
-
-app.get('/events/:id/edit', async (req, res) => {
-    const event = await Event.findById(req.params.id).populate('address')
-    res.render('events/edit', { event, eventCategories })
-})
-
-app.put('/events/:id', async (req, res) =>{
-    try {
-        const eventId = req.params.id
-        const event = await Event.findByIdAndUpdate(eventId, { ...req.body.event })
-        const addressId = event.address._id
-        const address = await Address.findByIdAndUpdate(addressId, { ...req.body.address })
-        res.redirect(`/events/${event._id}`)
-    } catch (err) {
-        console.log(err)
-    }
-})
-
-app.delete('/events/:id', async (req, res) => {
-    try {
-        const event = await Event.findByIdAndDelete(req.params.id)
-        const addressId = event.address._id
-        const add = await Address.findByIdAndDelete(addressId)
-    } catch (err) {
-        console.log(err)
-    }
-    res.redirect('/events')
+// error handler middleware
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err
+    const { message = 'Oh something went wrong!' } = err
+    res.status(statusCode).send(message)
 })
 
 app.listen(3000, () => {

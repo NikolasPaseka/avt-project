@@ -13,14 +13,11 @@
               <li class="list-group-item">Price: <%= event.price %> Kč</li>
               <li class="list-group-item">Category: <%= event.categories[0]%></li>
               <li class="list-group-item">
-                  <h5>Address</h5>
-                  <p><%= event.address.city %> </p>
-                  <p><%= event.address.street %> </p>
-                  <p><%= event.address.streetNumber %> </p>
+                  <p>Address: <%= event.address.city %>, <%= event.address.street %> <%= event.address.streetNumber %></p>
               </li>
             </ul>
             <div class="card-body">
-                <form action="/events/<%=event._id%>?_method=DELETE" method="POST">
+                <form class="d-inline" action="/events/<%=event._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
                 <a href="/events/<%=event._id%>/edit"><button class="btn btn-primary">Edit</button></a>
