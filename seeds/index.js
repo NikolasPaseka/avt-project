@@ -49,8 +49,9 @@ const seedDB = async () => {
             description: 'Fusce tellus odio, dapibus id fermentum quis, suscipit id erat. Morbi leo mi, nonummy eget tristique non, rhoncus non leo. Nam quis nulla. Fusce nibh. Maecenas fermentum, sem in pharetra pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Maecenas libero. Maecenas aliquet accumsan leo. In enim a arcu imperdiet malesuada. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Mauris dictum facilisis augue.',
             price: Math.floor(Math.random() * 500),
             creationDate: new Date(),
-            place: address,
-            categories: [randFromArr(eventCategories)]
+            address: address,
+            categories: [randFromArr(eventCategories)],
+            image: 'https://source.unsplash.com/random/?party,festival'
         })
         await address.save()
         await event.save()

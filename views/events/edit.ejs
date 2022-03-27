@@ -1,0 +1,64 @@
+<% layout('layouts/boilerplate') %> 
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <h2>Edit event</h2>
+            <form action="/events/<%=event._id%>?_method=PUT" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Event name</label>
+                    <input type="text" class="form-control" name="event[name]" id="name" value="<%=event.name%>">
+                </div>
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start date</label>
+                    <input type="date" class="form-control" name="event[startDate]" id="startDate" value="<%=event.startDate%>">
+                </div>
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">End date</label>
+                    <input type="date" class="form-control" name="event[endDate]" id="endDate" value="<%=event.endDate%>">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Event description</label>
+                    <textarea name="event[description]" class="form-control" id="description" cols="30" rows="10"><%=event.description%></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Event price</label>
+                    <input type="number" class="form-control" name="event[price]" id="price" value="<%=event.price%>">
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" name="address[city]" id="city" value="<%=event.address.city%>">
+                </div>
+                <div class="mb-3">
+                    <label for="street" class="form-label">Street</label>
+                    <input type="text" class="form-control" name="address[street]" id="street" value="<%=event.address.street%>">
+                </div>
+                <div class="mb-3">
+                    <label for="streetNumber" class="form-label">Street Number</label>
+                    <input type="text" class="form-control" name="address[streetNumber]" id="streetNumber" value="<%=event.address.streetNumber%>">
+                </div>
+                <div class="mb-3">
+                    <label for="long" class="form-label">Longtitude</label>
+                    <input type="text" class="form-control" name="address[long]" id="long" value="<%=event.address.long%>">
+                </div>
+                <div class="mb-3">
+                    <label for="lat" class="form-label">Latitude</label>
+                    <input type="text" class="form-control" name="address[lat]" id="lat" value="<%=event.address.lat%>">
+                </div>
+                <div class="mb-3">
+                    <label for="categories" class="form-label">Categories</label>
+                    <select class="form-select" name="event[categories]" id="categories">
+                        <% for (let category of eventCategories) { %>
+                            <option value="<%=category%>" <%= category === event.categories[0] ? 'selected' : ''%>><%=category%></option>
+                        <% } %>  
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image URL</label>
+                    <input type="text" class="form-control" name="event[image]" id="image" value="<%=event.image%>">
+                </div>
+                <button class="btn btn-success">Edit</button>
+            </form>
+        </div>
+    </div>
+    </div>

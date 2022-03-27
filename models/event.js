@@ -52,7 +52,7 @@ const eventSchema = new Schema({
         type: Date,
         default: Date.now()
     },
-    place: {
+    address: {
         type: Schema.Types.ObjectId,
         ref: 'Address'
     },
@@ -61,7 +61,10 @@ const eventSchema = new Schema({
             type: String,
             enum: eventCategories
         }
-    ]
+    ],
+    image: {
+        type: String
+    }
 })
 
 const Event = mongoose.model('Event', eventSchema)

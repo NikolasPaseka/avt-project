@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate') %> 
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card mb-3">
+            <img src="<%=event.image%>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%= event.name %></h5>
+              <p class="card-text"><b>Start Date: </b><%= event.startDate %></p>
+              <p class="card-text"><b>End Date: </b><%= event.endDate %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Price: <%= event.price %> Kč</li>
+              <li class="list-group-item">Category: <%= event.categories[0]%></li>
+              <li class="list-group-item">
+                  <h5>Address</h5>
+                  <p><%= event.address.city %> </p>
+                  <p><%= event.address.street %> </p>
+                  <p><%= event.address.streetNumber %> </p>
+              </li>
+            </ul>
+            <div class="card-body">
+                <form action="/events/<%=event._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+                <a href="/events/<%=event._id%>/edit"><button class="btn btn-primary">Edit</button></a>
+            </div>
+            <div class="card-body">
+                <p><%= event.description %> </p>
+              </div>
+          </div>
+    </div>
+</div>
