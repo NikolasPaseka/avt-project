@@ -6,9 +6,10 @@ const ExpressError = require('../utils/ExpressError')
 
 const { Event, eventCategories } = require('../models/event')
 const Address = require('../models/address')
+const Comment = require('../models/comment')
 
 router.get('/', catchAsync(async (req, res) => {
-    const events = await Event.find({})
+    const events = await Event.find({}).populate('address')
     res.render('events/index', { events })
 }))
 
@@ -17,8 +18,8 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', catchAsync(async (req, res) => {
-    const address = new Address( req.body.address)
-    const event = new Event( req.body.event)
+    const address = new Address(req.body.address)
+    const event = new Event(req.body.event)
     event.creationDate = Date.now()
     event.address = address
     await address.save()
@@ -27,7 +28,7 @@ router.post('/', catchAsync(async (req, res) => {
 }))
 
 router.get('/:id', catchAsync(async (req, res, next) => {
-    const event = await Event.findById(req.params.id).populate('address')
+    const event = await Event.findById(req.params.id).populate('address').populate('comments')
     if (!event) {
         return next(new ExpressError(404, 'Event not found'))
     }

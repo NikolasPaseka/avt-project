@@ -4,11 +4,12 @@
 <div class="row">
     <% for (event of events) { %>
         <div class="col-3">
-        <div class="card" style="width: 18rem;">
+        <div class="card mb-5">
             <img src="<%=event.image%>" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><%=event.name%></h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text"><b>Datum konání: </b><%= event.startDate.toLocaleDateString('cs-CZ') %></p>
+                <p class="card-text"><b>Místo konání: </b><%= event.address.city %> </p>
                 <a href="/events/<%=event._id%>" class="btn btn-primary">Event details</a>
             </div>
         </div>

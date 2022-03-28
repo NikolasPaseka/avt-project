@@ -10,6 +10,7 @@ const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
 
 const events = require('./routes/events')
+const comments = require('./routes/comments')
 
 mongoose.connect('mongodb://localhost:27017/joinMe')
     .then(() => {
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 
 // routes
 app.use('/events', events)
+app.use('/events/:id/comments', comments)
 
 app.all('*', (req, res, next) => {
    next(new ExpressError(404, 'Page Not Found!'))
@@ -44,8 +46,8 @@ app.all('*', (req, res, next) => {
 // error handler middleware
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err
-    const { message = 'Oh something went wrong!' } = err
-    res.status(statusCode).send(message)
+    if (!err.message) { err.message = 'Oh something went wrong!' }
+    res.status(statusCode).render('error', { err })
 })
 
 app.listen(3000, () => {

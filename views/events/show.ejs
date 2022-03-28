@@ -6,8 +6,8 @@
             <img src="<%=event.image%>" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><%= event.name %></h5>
-              <p class="card-text"><b>Start Date: </b><%= event.startDate %></p>
-              <p class="card-text"><b>End Date: </b><%= event.endDate %></p>
+              <p class="card-text"><b>Start Date: </b><%= event.startDate.toLocaleDateString('cs-CZ') %></p>
+              <p class="card-text"><b>End Date: </b><%= event.endDate.toLocaleDateString('cs-CZ') %></p>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">Price: <%= event.price %> Kč</li>
@@ -26,5 +26,14 @@
                 <p><%= event.description %> </p>
               </div>
           </div>
+        <form action="/events/<%=event._id%>/comments" method="POST">
+            <label class="form-label" for="comment">Leave a comment:</label>
+            <textarea class="form-control" name="comment[text]" id="comment" cols="30" rows="10"></textarea>
+            <button class="btn btn-success">Create comment</button>
+        </form>
+        <h3>Comments</h3>
+        <% for (let comment of event.comments) { %>
+            <p><%= comment.text %></p>
+        <% } %>  
     </div>
 </div>

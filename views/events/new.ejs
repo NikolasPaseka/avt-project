@@ -4,14 +4,14 @@
 <div class="row">
     <div class="col-6 offset-3">
         <h2>Create new event</h2>
-        <form action="/events" method="POST">
+        <form action="/events" method="POST" novalidate class="needs-validation">
             <div class="mb-3">
                 <label for="name" class="form-label">Event name</label>
-                <input type="text" class="form-control" name="event[name]" id="name">
+                <input type="text" class="form-control" name="event[name]" id="name" required>
             </div>
             <div class="mb-3">
                 <label for="startDate" class="form-label">Start date</label>
-                <input type="date" class="form-control" name="event[startDate]" id="startDate">
+                <input type="date" class="form-control" name="event[startDate]" id="startDate" required>
             </div>
             <div class="mb-3">
                 <label for="endDate" class="form-label">End date</label>
@@ -27,7 +27,7 @@
             </div>
             <div class="mb-3">
                 <label for="city" class="form-label">City</label>
-                <input type="text" class="form-control" name="address[city]" id="city">
+                <input type="text" class="form-control" name="address[city]" id="city" required>
             </div>
             <div class="mb-3">
                 <label for="street" class="form-label">Street</label>
@@ -47,7 +47,7 @@
             </div>
             <div class="mb-3">
                 <label for="categories" class="form-label">Categories</label>
-                <select class="form-select" name="event[categories]" id="categories">
+                <select class="form-select" name="event[categories]" id="categories" required>
                     <% for (let category of eventCategories) { %>
                         <option value="<%=category%>"><%=category%></option>
                     <% } %>  
@@ -55,7 +55,7 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image URL</label>
-                <input type="text" class="form-control" name="event[image]" id="image">
+                <input type="text" class="form-control" name="event[image]" id="image" required>
             </div>
             <button class="btn btn-success">Create</button>
         </form>

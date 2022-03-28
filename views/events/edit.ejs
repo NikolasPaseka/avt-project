@@ -11,11 +11,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="startDate" class="form-label">Start date</label>
-                    <input type="date" class="form-control" name="event[startDate]" id="startDate" value="<%=event.startDate%>">
+                    <input type="date" class="form-control" name="event[startDate]" id="startDate" value="<%=event.startDate.toISOString().slice(0, 10)%>">
                 </div>
                 <div class="mb-3">
                     <label for="endDate" class="form-label">End date</label>
-                    <input type="date" class="form-control" name="event[endDate]" id="endDate" value="<%=event.endDate%>">
+                    <input type="date" class="form-control" name="event[endDate]" id="endDate" value="<%=event.endDate.toISOString().slice(0, 10)%>">
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Event description</label>

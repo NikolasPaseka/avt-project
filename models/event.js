@@ -64,7 +64,13 @@ const eventSchema = new Schema({
     ],
     image: {
         type: String
-    }
+    },
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Comment'
+        }
+    ]
 })
 
 const Event = mongoose.model('Event', eventSchema)
