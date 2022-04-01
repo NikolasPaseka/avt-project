@@ -3,6 +3,7 @@ const router = express.Router()
 
 const catchAsync = require('../utils/catchAsync')
 const ExpressError = require('../utils/ExpressError')
+const { isLoggedIn } = require('../middleware')
 
 const { Event, eventCategories } = require('../models/event')
 const Address = require('../models/address')
@@ -13,11 +14,11 @@ router.get('/', catchAsync(async (req, res) => {
     res.render('events/index', { events })
 }))
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('events/new', { eventCategories })
 })
 
-router.post('/', catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, catchAsync(async (req, res) => {
     const address = new Address(req.body.address)
     const event = new Event(req.body.event)
     event.creationDate = Date.now()
@@ -35,12 +36,12 @@ router.get('/:id', catchAsync(async (req, res, next) => {
     res.render('events/show', { event })
 }))
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     const event = await Event.findById(req.params.id).populate('address')
     res.render('events/edit', { event, eventCategories })
 }))
 
-router.put('/:id', catchAsync(async (req, res) =>{
+router.put('/:id', isLoggedIn, catchAsync(async (req, res) =>{
     const eventId = req.params.id
     const event = await Event.findByIdAndUpdate(eventId, { ...req.body.event })
     const addressId = event.address._id
@@ -48,7 +49,7 @@ router.put('/:id', catchAsync(async (req, res) =>{
     res.redirect(`/events/${event._id}`)
 }))
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, catchAsync(async (req, res) => {
     const event = await Event.findByIdAndDelete(req.params.id)
     const addressId = event.address._id
     const add = await Address.findByIdAndDelete(addressId)
