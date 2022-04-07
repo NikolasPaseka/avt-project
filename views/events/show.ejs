@@ -13,27 +13,38 @@
               <li class="list-group-item">Price: <%= event.price %> Kč</li>
               <li class="list-group-item">Category: <%= event.categories[0]%></li>
               <li class="list-group-item">
-                  <p>Address: <%= event.address.city %>, <%= event.address.street %> <%= event.address.streetNumber %></p>
+                  Address: <%= event.address.city %>, <%= event.address.street %> <%= event.address.streetNumber %>
               </li>
+              <li class="list-group-item text-muted">Organiser: <%= event.organiser.username %></li>
             </ul>
-            <div class="card-body">
-                <form class="d-inline" action="/events/<%=event._id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
-                <a href="/events/<%=event._id%>/edit"><button class="btn btn-primary">Edit</button></a>
-            </div>
+            <% if (currentUser && currentUser._id.equals(event.organiser._id)) { %> 
+                <div class="card-body">
+                    <form class="d-inline" action="/events/<%=event._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <a href="/events/<%=event._id%>/edit"><button class="btn btn-primary">Edit</button></a>
+                </div>
+            <% } %> 
             <div class="card-body">
                 <p><%= event.description %> </p>
               </div>
           </div>
-        <form action="/events/<%=event._id%>/comments" method="POST">
-            <label class="form-label" for="comment">Leave a comment:</label>
-            <textarea class="form-control" name="comment[text]" id="comment" cols="30" rows="10"></textarea>
-            <button class="btn btn-success">Create comment</button>
-        </form>
+        <% if (currentUser) { %> 
+            <form action="/events/<%=event._id%>/comments" method="POST">
+                <label class="form-label" for="comment">Leave a comment:</label>
+                <textarea class="form-control" name="comment[text]" id="comment" cols="30" rows="5"></textarea>
+                <button class="btn btn-success mt-3">Create comment</button>
+            </form>
+        <% } %> 
         <h3>Comments</h3>
         <% for (let comment of event.comments) { %>
-            <p><%= comment.text %></p>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="card-text text-muted"><%= comment.user.username %></p>
+                    <p class="card-text"><%= comment.text %></p>
+                    <p class="card-text text-muted"><%= comment.dateOfCreation.toLocaleDateString('cs-CZ') %></p>
+                </div>
+            </div>
         <% } %>  
     </div>
 </div>

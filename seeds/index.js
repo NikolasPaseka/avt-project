@@ -5,6 +5,7 @@ const eventsNames = require('./eventNames')
 
 const { Event, eventCategories } = require('../models/event')
 const Address = require('../models/address')
+const Comment = require('../models/comment')
 
 mongoose.connect('mongodb://localhost:27017/joinMe')
     .then(() => {
@@ -29,6 +30,7 @@ function randomDate(start, end) {
 const seedDB = async () => {
     await Event.deleteMany({})
     await Address.deleteMany({})
+    await Comment.deleteMany({})
     for (i = 0; i < eventsNames.length; i++) {
         const randAddress = randFromArr(addresses)
         const address = new Address({ 
@@ -51,7 +53,8 @@ const seedDB = async () => {
             creationDate: new Date(),
             address: address,
             categories: [randFromArr(eventCategories)],
-            image: 'https://source.unsplash.com/random/?party,festival'
+            image: 'https://source.unsplash.com/random/?party,festival',
+            organiser: '62470ee6c3bd43488d0602fc'
         })
         await address.save()
         await event.save()

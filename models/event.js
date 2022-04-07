@@ -65,6 +65,10 @@ const eventSchema = new Schema({
     image: {
         type: String
     },
+    organiser: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     comments: [
         {
             type: Schema.Types.ObjectId,

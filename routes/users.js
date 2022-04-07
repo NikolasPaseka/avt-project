@@ -29,7 +29,7 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login'}), (req, res) => {
-    // TODO flash
+    req.flash('success', 'You are logged in')
     const redirectUrl = req.session.returnTo || '/events'
     delete req.session.returnTo
     res.redirect(redirectUrl)

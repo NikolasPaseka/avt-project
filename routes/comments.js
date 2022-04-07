@@ -14,6 +14,7 @@ router.post('/', catchAsync(async (req, res) => {
     const comment = new Comment(req.body.comment)
     event.comments.push(comment)
     comment.event = event
+    comment.user = req.user._id
     await event.save()
     await comment.save()
     res.redirect(`/events/${event._id}`)
